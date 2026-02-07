@@ -1,0 +1,7 @@
+@use "../tools/mixin" as p;
+
+%flex-center {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}

@@ -1,0 +1,31 @@
+:root {
+	--padding-inline: clamp(0.75rem, -4.107rem + 10.12vw, 5rem);
+	--padding-16-24: clamp(1rem, 0.429rem + 1.19vw, 1.5rem);
+	--padding-12-24: clamp(0.75rem, -0.107rem + 1.79vw, 1.5rem);
+	/* colors */
+	--red: #ff0032;
+	--red-hover: #ff0051;
+	--black: #000000;
+	--black-hover: #2b2b2f;
+	--deep-blue: #0b71ff;
+	--deep-blue-hover: #4693ff;
+	--light-blue: #e7efff;
+	--white: #fff;
+	--white-08: rgba(255, 255, 255, 0.8);
+	--gray-50: #f6f7fb;
+	--gray-100: #e6e9ef;
+	--gray-100-hover: #dbe2ef;
+	--gray-400: #babecf;
+	--gray-600: #818899;
+	--gray-600-hover: #9ba2a9;
+	--gray-800: #54585c;
+	--violet: #b20bff;
+	--light-violet: #fae8ff;
+	/* shadow */
+	--shadow: 0px 0px 20px 0px rgba(12, 26, 85, 0.12);
+	/* bg-linar */
+	--defaul-linar: linear-gradient(90deg, #b4c4ff 0%, #e4d9ff 100%);
+	/* border-radius */
+	--border-radius: 16px;
+	--border-radius-btn: 8px;
+}

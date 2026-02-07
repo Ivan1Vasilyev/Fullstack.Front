@@ -1,0 +1,125 @@
+@use "../../../styles/common/tools/provider" as p;
+
+.placeholder {
+	height: 70px;
+	width: 100%;
+	background-color: #fff;
+	border-radius: 0 0 16px 16px;
+
+	@include p.desktop {
+		height: 98px;
+		border-radius: 0;
+	}
+}
+
+.wrap {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 100;
+	background: rgba(255, 255, 255, 0.85);
+	backdrop-filter: blur(10px);
+	border-radius: 0px 0px 16px 16px;
+
+	@extend %flex-center;
+
+	@include p.desktop {
+		border-radius: 0;
+	}
+}
+
+.header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding-block: 12px;
+	gap: clamp(1rem, -0.714rem + 3.57vw, 2.5rem);
+
+	@include p.desktop {
+		padding-block: 28px;
+	}
+}
+
+.logo {
+	line-height: 0;
+}
+
+.right {
+	display: flex;
+	gap: 8px;
+	margin-left: auto;
+	align-items: center;
+
+	@include p.desktop {
+		margin-left: 0;
+		gap: 20px;
+	}
+}
+
+.button {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 12px 20px;
+	border-radius: var(--border-radius-btn);
+	transition: color 0.3s, background-color 0.3s;
+
+	@extend %header-button;
+	@extend %button-color;
+
+	&.city {
+		padding: 0;
+
+		& span {
+			transition: color 0.3s;
+		}
+
+		& path {
+			transition: fill 0.3s;
+		}
+
+		&.active {
+			span {
+				color: var(--deep-blue);
+			}
+
+			path {
+				fill: var(--deep-blue);
+			}
+		}
+
+		@include p.desktop {
+			&:hover {
+				span {
+					color: var(--deep-blue);
+				}
+
+				path {
+					fill: var(--deep-blue);
+				}
+			}
+		}
+	}
+
+	&.menu {
+		margin-left: auto;
+		margin-right: auto;
+
+		&.active {
+			background-color: var(--red-hover);
+		}
+
+		& .close {
+			display: none;
+		}
+
+		&.active .close {
+			display: initial;
+		}
+
+		&.active .open {
+			display: none;
+		}
+	}
+}

@@ -1,0 +1,13 @@
+@use "../../../styles/common/tools/provider" as p;
+
+.button {
+	color: var(--deep-blue);
+	font-size: inherit;
+	line-height: inherit;
+
+	@include p.desktop {
+		&:hover {
+			color: var(--deep-blue-hover);
+		}
+	}
+}

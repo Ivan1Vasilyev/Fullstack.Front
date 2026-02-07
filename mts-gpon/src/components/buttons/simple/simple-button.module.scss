@@ -1,0 +1,10 @@
+@use "../../../styles/common/tools/provider" as p;
+
+.button {
+	border-radius: var(--border-radius-btn);
+	padding: 16px 28px;
+	transition: color 0.3s, background-color 0.3s;
+
+	@extend %btn-md;
+	@extend %button-color;
+}

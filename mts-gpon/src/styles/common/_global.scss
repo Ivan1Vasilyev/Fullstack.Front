@@ -1,0 +1,57 @@
+@use "./tools/provider" as m;
+
+body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	font-style: normal;
+	font-size: 16px;
+	line-height: 1;
+	color: var(--black);
+	background: var(--gray-50);
+
+	@extend %font-family-text-400;
+}
+
+main {
+	flex: 1;
+	@extend %flex-center;
+}
+
+@include m.desktop {
+	a,
+	button {
+		cursor: pointer;
+		transition: color 0.3s;
+	}
+}
+
+.no-wrap,
+a,
+button {
+	white-space: nowrap;
+}
+
+.container {
+	max-width: 1304px;
+	padding-left: 12px;
+	padding-right: 12px;
+	width: 100%;
+}
+
+.container-wide {
+	width: 100%;
+}
+
+.container-mob {
+	max-width: 1280px;
+	width: 100%;
+}
+
+.block {
+	margin-bottom: clamp(2.25rem, -2.321rem + 9.52vw, 6.25rem);
+}
+
+// a.inline {
+// 	@extend %inline-button-or-link;
+// }

@@ -1,0 +1,10 @@
+packages:
+  - common
+  - mts-gpon
+  - administrator
+
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - '@mui/x-telemetry@8.20.0'
+  - sharp
+  - unrs-resolver

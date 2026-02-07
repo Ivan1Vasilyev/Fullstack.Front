@@ -1,0 +1,65 @@
+body {
+	margin: 0;
+}
+
+input,
+button,
+textarea,
+select {
+	font-family: inherit;
+}
+
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	margin: 0;
+}
+
+ul,
+ol,
+menu,
+fieldset {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+button {
+	padding: 0;
+	border: none;
+	background: none;
+	font-size: inherit;
+}
+
+img,
+picture {
+	line-height: 0;
+}
+
+.reset p {
+	margin: revert;
+}
+
+.reset ul,
+.reset ol,
+.reset menu,
+.reset fieldset {
+	margin: revert;
+	padding: revert;
+	list-style: revert;
+}

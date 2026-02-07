@@ -1,0 +1,53 @@
+@use "../tools/mixin" as p;
+
+%button-color {
+	&.red {
+		color: var(--white);
+		background-color: var(--red);
+
+		&.active {
+			background-color: var(--red-hover);
+		}
+	}
+
+	&.gray-100 {
+		background-color: var(--gray-100);
+
+		&.active {
+			background-color: var(--gray-100-hover);
+		}
+	}
+
+	&.black {
+		color: var(--white);
+		background-color: var(--black);
+
+		&.active {
+			background-color: var(--black-hover);
+		}
+	}
+
+	&:disabled {
+		background-color: var(--gray-400);
+		fill: var(--gray-400);
+	}
+
+	@include p.desktop {
+		&.red:hover {
+			background-color: var(--red-hover);
+		}
+
+		&.gray-100:hover {
+			background-color: var(--gray-100-hover);
+		}
+
+		&.black:hover {
+			background-color: var(--black-hover);
+		}
+
+		&:disabled:hover {
+			cursor: default;
+			background-color: var(--gray-400);
+		}
+	}
+}
