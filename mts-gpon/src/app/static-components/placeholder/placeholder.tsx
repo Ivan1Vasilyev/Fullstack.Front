@@ -128,7 +128,7 @@ const parseHTMLWithPlaceholders = (text: string, city: cityModel, indexRef: { cu
 		}
 
 		if (nextPos === nextLT && nextLT !== -1) {
-			// Найден HTML тегсв
+			// Найден HTML тег
 			const tagMatch = text.substring(nextLT).match(/^<(\/?)(\w+)([^>]*?)(\/?)>/)
 			if (tagMatch) {
 				const [fullMatch, isClosing, tagName, attributesStr, isSelfClosing] = tagMatch
@@ -159,7 +159,7 @@ const parseHTMLWithPlaceholders = (text: string, city: cityModel, indexRef: { cu
 						React.createElement(Element, {
 							key: `${indexRef.current++}`,
 							...reactProps,
-						})
+						}),
 					)
 					pos = nextLT + fullMatch.length
 				} else {
@@ -180,8 +180,8 @@ const parseHTMLWithPlaceholders = (text: string, city: cityModel, indexRef: { cu
 									key: `${indexRef.current++}`,
 									...reactProps,
 								},
-								...children
-							)
+								...children,
+							),
 						)
 
 						pos = closePos + closeTag.length
@@ -192,7 +192,7 @@ const parseHTMLWithPlaceholders = (text: string, city: cityModel, indexRef: { cu
 							React.createElement(Element, {
 								key: `${indexRef.current++}`,
 								...attributes,
-							})
+							}),
 						)
 						pos = nextLT + fullMatch.length
 					}
@@ -212,7 +212,7 @@ const parseHTMLWithPlaceholders = (text: string, city: cityModel, indexRef: { cu
 				const node = element
 					? React.cloneElement(element as React.ReactElement, {
 							key: `${indexRef.current++}`,
-					  })
+						})
 					: text.substring(nextBrace)
 
 				nodes.push(node)

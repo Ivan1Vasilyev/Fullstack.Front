@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Fragment } from 'react'
 import Faq from '../common/faq/faq'
-import { getCities, modalTypeEnum } from '@frontend/common'
+import { getCities, modalTypeEnum, sanitizeHtml } from '@frontend/common'
 import SimpleButton from '../buttons/simple/simple-button'
 import ModalButton from '../buttons/modal/modal'
 import { buttonColorEnum } from '../buttons/button-color-enum'
@@ -11,8 +11,9 @@ const MainPage = async () => {
 	const cities = await getCities(PROVIDER_ID)
 	const city = cities[0]
 
-	const text =
-		'<p>Чтобы подключить интернет от МТС в вашем доме или квартире в Москве, {order[оставьте заявку]} на сайте или {phone[позвоните]} <span class="desk">позвоните</span> в наш контакт-центр по телефону<a type="audio/telephone-event" href="tel:84952600890" title="+7 (495) 260-08-90" class="desk"> +7 (495) 260-08-90</a>. Специалист свяжется с вами для уточнения деталей и согласования времени визита мастера.</p>'
+	const text = await sanitizeHtml(
+		'<p>Чтобы подключить интернет от МТС в вашем доме или квартире в Москве, {order[оставьте заявку]} на сайте или {phone[позвоните]} <span class="desk">позвоните</span> в наш контакт-центр по телефону<a type="audio/telephone-event" href="tel:84952600890" title="+7 (495) 260-08-90" class="desk"> +7 (495) 260-08-90</a>. Специалист свяжется с вами для уточнения деталей и согласования времени визита мастера.</p>',
+	)
 
 	return (
 		<>

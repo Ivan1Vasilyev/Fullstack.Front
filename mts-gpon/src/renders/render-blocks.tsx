@@ -1,14 +1,16 @@
+import { IContentItem, iPage, BlockNamesEnum } from '@frontend/common'
 import RenderBlock from './render-block'
 
 const RenderBlocks = () => {
 	const data = [
-		{ key: 0, block: 'block-1', name: 'Главная' },
-		{ key: 1, block: 'block-2', name: 'Тарифы' },
+		{ position: 0, block: BlockNamesEnum.banner, data: {} as IContentItem, page: {} as iPage },
+		{ position: 1, block: BlockNamesEnum.tariffs, data: {} as IContentItem, page: {} as iPage },
 	]
+
 	return (
 		<>
 			{data.map(i => (
-				<RenderBlock key={i.key} page={i.name} block={i.block} />
+				<RenderBlock key={i.position} data={i.data} blockName={i.block} page={i.page} />
 			))}
 		</>
 	)

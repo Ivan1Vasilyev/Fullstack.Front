@@ -10,6 +10,8 @@
 	},
 	"dependencies": {
 		"@frontend/common": "workspace:*",
+		"dompurify": "^3.3.1",
+		"isomorphic-dompurify": "3.0.0-rc.2",
 		"next": "16.1.4",
 		"react": "19.2.1",
 		"react-dom": "19.2.1"

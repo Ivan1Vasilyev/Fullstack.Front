@@ -1,6 +1,6 @@
 import { iPage, pageContext, pageTypeEnum, isNavigationNames, navigationNames, isPageTypeEnum } from '../../models/business/page'
-
 import apiService from '../api/api-service'
+import { IContent } from '../../models/content/i-content'
 
 export const getPages = async (): Promise<iPage[]> => {
 	const pageContextList: pageContext[] = await apiService.getPages()
@@ -65,5 +65,7 @@ const convertToIPage = (source: pageContext): iPage => {
 	// 	}
 	// }
 
-	return { id, title, description, uri, alias, name, type, navigationNames, children, parent }
+	const content = {} as IContent
+
+	return { id, title, description, uri, alias, name, type, navigationNames, children, parent, content }
 }

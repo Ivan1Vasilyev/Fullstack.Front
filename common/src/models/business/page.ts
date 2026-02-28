@@ -1,3 +1,4 @@
+import { IContent } from '../content/i-content'
 import { navigationMenuEnum } from './context'
 
 export interface pageContext {
@@ -23,6 +24,7 @@ export interface iPage {
 	type: pageTypeEnum
 	parent: iPage | null
 	children: iPage[]
+	content: IContent
 }
 
 export type navigationNames = Record<navigationMenuEnum | placeEnum, string>
