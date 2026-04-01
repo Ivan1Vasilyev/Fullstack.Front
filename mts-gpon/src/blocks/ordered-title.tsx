@@ -1,7 +1,7 @@
 import { IHeaderBlock, BlockProps } from '@frontend/common'
 
 const OrderedTitle = ({ data }: BlockProps) => {
-	const titleData = (data.blockData as IHeaderBlock) || ({} as IHeaderBlock)
+	const titleData = data.blockData as IHeaderBlock
 
 	const Tag = titleData.tag || 'h2'
 	const title = titleData.title
