@@ -1,16 +1,17 @@
 import { sanitizeHtml } from '@frontend/common'
-import { IHeaderBlock, BlockProps } from '@frontend/common'
+import { IHeaderBlock, IBlockProps } from '@frontend/common'
 
-const Title = async ({ data }: BlockProps) => {
-	const titleData = (data.blockData as IHeaderBlock) || ({} as IHeaderBlock)
+const Title = async ({ data }: IBlockProps) => {
+	const titleData = (data as IHeaderBlock) || ({} as IHeaderBlock)
 
 	const Tag = titleData.tag || 'h2'
-	const title = await sanitizeHtml('Текст заголовка. <br/> вторая строка <script>alert("HACKERS!!!")</script>')
+	const title = await sanitizeHtml(titleData.title)
+	const text = await sanitizeHtml(titleData.text)
 
 	return (
 		<>
 			<Tag dangerouslySetInnerHTML={{ __html: title }} />
-			{titleData.text && <p>{titleData.text}</p>}
+			{text && <p>{text}</p>}
 		</>
 	)
 }

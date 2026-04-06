@@ -11,14 +11,14 @@ class SitesService extends ApiBase implements ISitesService {
 	constructor() {
 		super()
 		this._domain += 'sites'
-		this._getByProviderId = this._createSimpleFetch<tSite[]>({ key: `/`, method: 'GET', headers: this._jsonHeaders })
-		this._update = this._createFetchWithBody<tSite>({ key: '', method: 'PATCH', headers: this._jsonHeaders })
-		this._create = this._createFetchWithBody<tSite>({ key: '', method: 'POST', headers: this._jsonHeaders })
+		this._getByProviderId = this._createSimpleFetch<tSite[]>({ key: ``, method: 'GET' })
+		this._update = this._createFetchWithBody<tSite>({ key: '', method: 'PATCH' })
+		this._create = this._createFetchWithBody<tSite>({ key: '', method: 'POST' })
 	}
 
-	getByProviderId = async (providerId: number) => this._getByProviderId(providerId)
-	update = async (args: updateSiteArgs) => this._update(args)
-	create = async (args: createSiteArgs) => this._create(args)
+	getByProviderId = (providerId: number) => this._getByProviderId(providerId)
+	update = (args: updateSiteArgs) => this._update(args)
+	create = (args: createSiteArgs) => this._create(args)
 }
 
 export default new SitesService() as ISitesService

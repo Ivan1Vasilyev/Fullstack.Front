@@ -2,19 +2,16 @@ import { Button } from '@mui/material'
 import sitesService from '@/lib/services/sites-service/sites-service'
 import SiteNode from '../site/site-node'
 import TreeNode from '../tree-node'
-import { useEffect } from 'react'
 import { IProviderModel } from '../../../../../signals/providers/provider-model'
 import { WorkspacePropsByKey } from '@/signals/content-page/workspace-model'
+import { useSignals } from '@preact/signals-react/runtime'
 
 const ProviderNode = ({ provider }: { provider: IProviderModel }) => {
-	useEffect(() => {
-		;(async () => {
-			if (provider.sites.value.length === 0) {
-				const result = await sitesService.getByProviderId(provider.model.value.id)
-				provider.setSites(result)
-			}
-		})()
-	}, [])
+	useSignals()
+
+	if (provider.sites.value.length === 0) {
+		sitesService.getByProviderId(provider.model.value.id).then(result => provider.setSites(result))
+	}
 
 	const openUpdateForm = () => {
 		WorkspacePropsByKey.value = { key: 'ProviderUpdate', props: { provider, contentKey: `ProviderUpdate${provider.model.value.id}` } }

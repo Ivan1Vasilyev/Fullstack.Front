@@ -1,4 +1,4 @@
-import { IContent } from '../content/i-content'
+import { IOrderable } from '../view/orderable'
 import { navigationMenuEnum } from './context'
 
 export interface pageContext {
@@ -15,8 +15,7 @@ export interface pageContext {
 
 export interface iPage {
 	id: string
-	title: string
-	description: string
+	meta: IOrderable<IMetaItem>
 	uri: string
 	alias: string
 	name: string
@@ -24,13 +23,13 @@ export interface iPage {
 	type: pageTypeEnum
 	parent: iPage | null
 	children: iPage[]
-	content: IContent
+	content: string
 }
 
 export type navigationNames = Record<navigationMenuEnum | placeEnum, string>
 
 enum placeEnum {
-	breadcrumb = 'breadcrumb',
+	breadcrumb = 'breadcrumb'
 }
 
 export function isNavigationNames(key: string): key is navigationMenuEnum | placeEnum {
@@ -47,7 +46,12 @@ export enum pageTypeEnum {
 	news,
 	article,
 	service,
-	p404,
+	p404
+}
+
+export interface IMetaItem {
+	title: string
+	description: string
 }
 
 export const isPageTypeEnum = (value: string): value is keyof typeof pageTypeEnum => value in pageTypeEnum

@@ -1,6 +1,6 @@
-import { iPage, pageContext, pageTypeEnum, isNavigationNames, navigationNames, isPageTypeEnum } from '../../models/business/page'
+import { iPage, pageContext, pageTypeEnum, navigationNames, isPageTypeEnum } from '../../models/business/page'
+import { Orderable } from '../../models/view/orderable'
 import apiService from '../api/api-service'
-import { IContent } from '../../models/content/i-content'
 
 export const getPages = async (): Promise<iPage[]> => {
 	const pageContextList: pageContext[] = await apiService.getPages()
@@ -65,7 +65,8 @@ const convertToIPage = (source: pageContext): iPage => {
 	// 	}
 	// }
 
-	const content = {} as IContent
+	const meta = new Orderable({ title, description }, {})
+	const content = ''
 
-	return { id, title, description, uri, alias, name, type, navigationNames, children, parent, content }
+	return { id, meta, uri, alias, name, type, navigationNames, children, parent, content }
 }

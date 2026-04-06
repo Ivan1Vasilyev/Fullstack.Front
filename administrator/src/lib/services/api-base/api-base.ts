@@ -1,7 +1,7 @@
 type createFetchArgs = {
 	key: string
 	method: 'POST' | 'GET' | 'PATCH' | 'PUT' | 'DELETE'
-	headers: HeadersInit
+	headers?: HeadersInit
 }
 
 export default class ApiBase {
@@ -13,27 +13,28 @@ export default class ApiBase {
 		if (response.ok) {
 			return await response.json()
 		} else {
+			console.log(response)
 			throw await response.json()
 		}
 	}
 	_createFetchWithBody =
-		<T>({ key, method, headers }: createFetchArgs) =>
+		<T>({ key, method, headers = this._jsonHeaders }: createFetchArgs) =>
 		async (data: any): Promise<T> =>
 			this._responseHandler<T>(
-				await fetch(`${this._domain}${key}`, {
+				await fetch(`${this._domain}/${key}`, {
 					method,
 					headers,
-					body: JSON.stringify(data),
-				}),
+					body: JSON.stringify(data)
+				})
 			)
 
 	_createSimpleFetch =
 		<T>({ key, method, headers }: createFetchArgs) =>
 		async (data?: string | number): Promise<T> =>
 			this._responseHandler<T>(
-				await fetch(`${this._domain}${key}${data || ''}`, {
+				await fetch(`${this._domain}${key}/${data || ''}`, {
 					method,
-					headers,
-				}),
+					headers
+				})
 			)
 }

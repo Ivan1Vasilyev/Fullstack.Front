@@ -1,7 +1,9 @@
-import { BlockProps } from '@frontend/common'
+import { IBlockProps } from '@frontend/common'
 
-const MainBanner = ({ data }: BlockProps) => {
-	return <div>Main Banner</div>
+const MainBanner = ({ data }: IBlockProps) => {
+	const cssClass = data.cssClass
+
+	return <div>Main Banner {cssClass}</div>
 }
 
 export default MainBanner

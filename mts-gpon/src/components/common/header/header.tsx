@@ -16,8 +16,19 @@ import ModalButton from '@/components/buttons/modal/modal'
 import { buttonColorEnum } from '@/components/buttons/button-color-enum'
 
 const Header = async ({ city }: { city?: string }) => {
-	const cityData = await getCity(city)
-	const mainPageUrl = cityData?.frontCode ?? ''
+	const cities = (code?: string) => {
+		switch (code) {
+			case 'balashixa':
+				return { cityName: 'Балашиха', frontCode: '/balashixa' }
+			case 'sankt-peterburg':
+				return { cityName: 'Санкт-Петербург', frontCode: '/sankt-peterburg' }
+			default:
+				return { cityName: 'Москва', forntCode: '' }
+		}
+	}
+	const cityData = cities(city)
+	// const cityData = await getCity(city)
+	const mainPageUrl = cityData?.frontCode ?? '/'
 
 	return (
 		<>

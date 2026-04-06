@@ -1,11 +1,13 @@
 import { Button } from '@mui/material'
-import { useSignal } from '@preact/signals-react'
 import TreeNode from '../tree-node'
 import { ISiteModel } from '@/signals/sites/site-model'
 import { WorkspacePropsByKey } from '@/signals/content-page/workspace-model'
 import { IProviderModel } from '@/signals/providers/provider-model'
+import { useSignals } from '@preact/signals-react/runtime'
 
 const SiteNode = ({ site, provider }: { site: ISiteModel; provider: IProviderModel }) => {
+	useSignals()
+
 	const openUpdateForm = () => {
 		WorkspacePropsByKey.value = { key: 'SiteUpdate', props: { site, provider, contentKey: `SiteUpdate${site.model.value.id}` } }
 	}

@@ -1,6 +1,6 @@
-import { BlockProps } from '@frontend/common'
+import { IBlockProps } from '@frontend/common'
 
-const Block1 = ({ data }: BlockProps) => {
+const Block1 = ({ data }: IBlockProps) => {
 	return <div>Block 1</div>
 }
 

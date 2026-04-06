@@ -1,15 +1,14 @@
-import { IHeaderBlock, BlockProps } from '@frontend/common'
+import { IHeaderBlock, IBlockProps, IOrderable, Orderable } from '@frontend/common'
 
-const OrderedTitle = ({ data }: BlockProps) => {
-	const titleData = data.blockData as IHeaderBlock
+const OrderedTitle = ({ data, city }: IBlockProps) => {
+	const titleData = data as IOrderable<IHeaderBlock>
 
-	const Tag = titleData.tag || 'h2'
-	const title = titleData.title
+	const { title, text, tag: Tag = 'h2' } = new Orderable(titleData.default, titleData.cities).get(city.domainCode)
 
 	return (
 		<>
 			<Tag>{title}</Tag>
-			{titleData.text && <p>{titleData.text}</p>}
+			{text && <p>{text}</p>}
 		</>
 	)
 }

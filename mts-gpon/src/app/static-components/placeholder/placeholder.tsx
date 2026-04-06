@@ -23,7 +23,7 @@ import { buttonColorEnum } from '@/components/buttons/button-color-enum'
 
 enum pagesUrlByNameKeys {
 	main = 'Главная',
-	allTariffs = 'Все тарифы',
+	allTariffs = 'Все тарифы'
 }
 
 type pageUrlByNameType = Record<pagesUrlByNameKeys, string>
@@ -32,7 +32,7 @@ const isPagesKey = (key: string): key is pagesUrlByNameKeys => key in pagesUrlBy
 
 const pagesUrlByName: pageUrlByNameType = {
 	[pagesUrlByNameKeys.main]: '',
-	[pagesUrlByNameKeys.allTariffs]: '/tariffs',
+	[pagesUrlByNameKeys.allTariffs]: '/tariffs'
 }
 
 const Placeholders = ({ text, city }: { text: string; city: cityModel }) => {
@@ -62,7 +62,7 @@ const replacePlaceHolder = (source: string, city: cityModel): JSX.Element | null
 
 		case 'phone':
 			return (
-				<InlineButton component={Link} href={`tel:${city.phoneLink}`} data-calltracking={true}>
+				<InlineButton component={Link} href={`tel:${city.phoneLink}`} data-calltracking={true} type='audio/telephone-event' title={city.phoneLabel}>
 					{text || city.phoneLabel}
 				</InlineButton>
 			)
@@ -97,7 +97,7 @@ const getLinkData = (text: string, city: cityModel): { link: string; label: stri
 	if (isPagesKey(key)) {
 		return {
 			link: `${city.frontCode}${pagesUrlByName[key]}`,
-			label: splittedText[1] || key,
+			label: splittedText[1] || key
 		}
 	}
 
@@ -158,8 +158,8 @@ const parseHTMLWithPlaceholders = (text: string, city: cityModel, indexRef: { cu
 					nodes.push(
 						React.createElement(Element, {
 							key: `${indexRef.current++}`,
-							...reactProps,
-						}),
+							...reactProps
+						})
 					)
 					pos = nextLT + fullMatch.length
 				} else {
@@ -178,10 +178,10 @@ const parseHTMLWithPlaceholders = (text: string, city: cityModel, indexRef: { cu
 								Element,
 								{
 									key: `${indexRef.current++}`,
-									...reactProps,
+									...reactProps
 								},
-								...children,
-							),
+								...children
+							)
 						)
 
 						pos = closePos + closeTag.length
@@ -191,8 +191,8 @@ const parseHTMLWithPlaceholders = (text: string, city: cityModel, indexRef: { cu
 						nodes.push(
 							React.createElement(Element, {
 								key: `${indexRef.current++}`,
-								...attributes,
-							}),
+								...attributes
+							})
 						)
 						pos = nextLT + fullMatch.length
 					}
@@ -211,7 +211,7 @@ const parseHTMLWithPlaceholders = (text: string, city: cityModel, indexRef: { cu
 
 				const node = element
 					? React.cloneElement(element as React.ReactElement, {
-							key: `${indexRef.current++}`,
+							key: `${indexRef.current++}`
 						})
 					: text.substring(nextBrace)
 
