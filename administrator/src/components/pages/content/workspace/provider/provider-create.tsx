@@ -18,7 +18,7 @@ const ProviderCreate = () => {
 
 	return (
 		<Form title='Новый провайдер' formName='provider-create' submitCallback={submitCallback} successMessage={successMessage}>
-			<InputStandart name='name' label='Название' />
+			<InputStandart name='name' label='Название' required />
 		</Form>
 	)
 }

@@ -1,16 +1,32 @@
 import { IOrderable } from '../view/orderable'
 import { navigationMenuEnum } from './context'
 
-export interface pageContext {
-	id: string
-	title: string
-	description: string
-	uri: string
-	alias: string
+// export interface pageContext {
+// 	id: string
+// 	title: string
+// 	description: string
+// 	uri: string
+// 	alias: string
+// 	name: string
+// 	type: string
+// 	parentId: string
+// 	children: string[]
+// }
+
+export interface IPageContext {
+	id: number
 	name: string
-	type: string
-	parentId: string
-	children: string[]
+	type: pageTypeEnum
+	url: string
+	siteId: number
+	parentId: number | null
+	content?: string
+	meta?: string
+}
+
+export enum pageTypeEnum {
+	common = 'common',
+	standart = 'standart'
 }
 
 export interface iPage {
@@ -38,20 +54,9 @@ export function isNavigationNames(key: string): key is navigationMenuEnum | plac
 
 export const navigationNamesEnum = { ...navigationMenuEnum, ...placeEnum } as const
 
-export enum pageTypeEnum {
-	main,
-	common,
-	action,
-	tariff,
-	news,
-	article,
-	service,
-	p404
-}
-
 export interface IMetaItem {
 	title: string
 	description: string
 }
 
-export const isPageTypeEnum = (value: string): value is keyof typeof pageTypeEnum => value in pageTypeEnum
+// export const isPageTypeEnum = (value: string): value is keyof typeof pageTypeEnum => value in pageTypeEnum

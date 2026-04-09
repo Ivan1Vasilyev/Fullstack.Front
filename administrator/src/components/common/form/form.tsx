@@ -77,7 +77,7 @@ const Form = memo(
 				>
 					{children}
 					<Box sx={{ display: 'flex', gap: '10px' }}>
-						<Button size='small' type='submit' variant='outlined' loading={isLoading} disabled={isSubmitDisabled}>
+						<Button type='submit' variant='outlined' loading={isLoading} disabled={isSubmitDisabled}>
 							Сохранить
 						</Button>
 					</Box>

@@ -5,7 +5,7 @@ import { providerList } from '@/signals/providers/provider-list'
 import { WorkspacePropsByKey } from '@/signals/content-page/workspace-model'
 import { memo } from 'react'
 
-const Tree = memo(() => (
+const Tree = () => (
 	<Box sx={{ display: 'grid', gap: '10px' }}>
 		{providerList.items.value.map(i => (
 			<ProviderNode key={i.model.value.id} provider={i} />
@@ -17,6 +17,6 @@ const Tree = memo(() => (
 			</Fab>
 		</Tooltip>
 	</Box>
-))
+)
 
-export default Tree
+export default memo(Tree)

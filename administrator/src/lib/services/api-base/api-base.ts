@@ -13,7 +13,6 @@ export default class ApiBase {
 		if (response.ok) {
 			return await response.json()
 		} else {
-			console.log(response)
 			throw await response.json()
 		}
 	}

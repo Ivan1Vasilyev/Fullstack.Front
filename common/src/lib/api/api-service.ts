@@ -1,5 +1,5 @@
 import { cityContext } from '../../models/business/city'
-import { pageContext } from '../../models/business/page'
+import { IPageContext } from '../../models/business/page'
 
 const PORT = '7141'
 const HOST = 'localhost'
@@ -12,7 +12,7 @@ class ApiService {
 	}
 
 	public getCities = async (providerId: number): Promise<cityContext[]> => await fetch(`${this._url}cities/${providerId}`).then(r => r.json())
-	public getPages = async (): Promise<pageContext[]> => await fetch(`${this._url}pages`).then(r => r.json())
+	public getPages = async (): Promise<IPageContext[]> => await fetch(`${this._url}pages`).then(r => r.json())
 }
 
 export default new ApiService(PORT, HOST)

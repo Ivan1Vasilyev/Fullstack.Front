@@ -1,23 +1,29 @@
 import { Box, Tooltip, IconButton } from '@mui/material'
 import { buttonStyle, dropWrapStyle, dropStyle } from './styles'
 import KeyboardArrowRightTwoToneIcon from '@mui/icons-material/KeyboardArrowRightTwoTone'
-import { useSignal } from '@preact/signals-react'
+import { Signal, useSignal } from '@preact/signals-react'
 import React from 'react'
 
 const TreeNode = ({
 	children,
 	buttonComponent: ButtonComponent,
-	hasChildren
-}: Readonly<{ children: React.ReactNode; buttonComponent: React.ReactNode; hasChildren: boolean }>) => {
+	hasChildren,
+	openCallback
+}: Readonly<{ children: React.ReactNode; buttonComponent: React.ReactNode; hasChildren: Signal<boolean>; openCallback: () => void }>) => {
 	const isOpen = useSignal<boolean>(false)
+
+	const onClick = () => {
+		isOpen.value = !isOpen.value
+		openCallback()
+	}
 
 	return (
 		<div>
 			<Box sx={buttonStyle}>
 				{ButtonComponent}
-				{hasChildren && (
+				{hasChildren.value && (
 					<Tooltip title={isOpen.value ? 'Скрыть' : 'Показать'} placement='right'>
-						<IconButton onClick={() => (isOpen.value = !isOpen.value)} sx={{ transition: 'transform .3s ease-out', transform: isOpen.value ? 'rotate(90deg)' : '' }}>
+						<IconButton onClick={onClick} sx={{ transition: 'transform .3s ease-out', transform: isOpen.value ? 'rotate(90deg)' : '' }}>
 							<KeyboardArrowRightTwoToneIcon fontSize='small' />
 						</IconButton>
 					</Tooltip>

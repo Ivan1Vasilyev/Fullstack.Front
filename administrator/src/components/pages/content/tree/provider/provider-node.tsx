@@ -4,13 +4,26 @@ import SiteNode from '../site/site-node'
 import TreeNode from '../tree-node'
 import { IProviderModel } from '../../../../../signals/providers/provider-model'
 import { WorkspacePropsByKey } from '@/signals/content-page/workspace-model'
-import { useSignals } from '@preact/signals-react/runtime'
+import { useSignal, useSignals } from '@preact/signals-react/runtime'
+import { tSite } from '@frontend/common'
 
 const ProviderNode = ({ provider }: { provider: IProviderModel }) => {
 	useSignals()
 
+	const hasChildren = useSignal<boolean>(false)
+	const sites = useSignal<tSite[]>([])
+
 	if (provider.sites.value.length === 0) {
-		sitesService.getByProviderId(provider.model.value.id).then(result => provider.setSites(result))
+		sitesService.getByProviderId(provider.model.value.id).then(result => {
+			hasChildren.value = result.length > 0
+			sites.value = result
+		})
+	}
+
+	const openCallback = () => {
+		if (provider.sites.value.length === 0 && sites.value.length > 0) {
+			provider.setSites(sites.value)
+		}
 	}
 
 	const openUpdateForm = () => {
@@ -19,7 +32,8 @@ const ProviderNode = ({ provider }: { provider: IProviderModel }) => {
 
 	return (
 		<TreeNode
-			hasChildren={provider.sites.value.length > 0}
+			hasChildren={hasChildren}
+			openCallback={openCallback}
 			buttonComponent={
 				<Button variant='contained' size='small' onClick={openUpdateForm}>
 					{provider.model.value.name}
@@ -27,7 +41,7 @@ const ProviderNode = ({ provider }: { provider: IProviderModel }) => {
 			}
 		>
 			{provider.sites.value.map(site => (
-				<SiteNode key={site.model.value.id} site={site} provider={provider} />
+				<SiteNode key={site.model.value.id} site={site} />
 			))}
 		</TreeNode>
 	)

@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, IconButton } from '@mui/material'
+import { Box, Button, ButtonGroup, IconButton, Tooltip } from '@mui/material'
 import HomeIcon from '@mui/icons-material/Home'
 import Link from 'next/link'
 
@@ -12,11 +12,13 @@ const Header = () => (
 				<Button>Медиа</Button>
 			</Link>
 		</ButtonGroup>
+		{/* <Tooltip title='Главная' placement='left'> */}
 		<Link href='/'>
 			<IconButton size='large'>
 				<HomeIcon />
 			</IconButton>
 		</Link>
+		{/* </Tooltip> */}
 	</Box>
 )
 

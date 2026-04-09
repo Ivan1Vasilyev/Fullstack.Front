@@ -1,12 +1,10 @@
-import { IPage } from '@/lib/models/i-page'
-import { createPageArgs, updatePageArgs, updatePageAliasArgs, createPageContentArgs, upatePageContentArgs, getPagesByParentIdArgs } from './pages-arguments'
+import { IPageContext } from '@frontend/common'
+import { createPageFormArgs, updatePageArgs, updatePageUrlArgs, getPagesByParentIdArgs } from './pages-arguments'
 
 export interface IPagesService {
-	getByParentId: (args: getPagesByParentIdArgs) => Promise<IPage[]>
-	create: (args: createPageArgs) => Promise<IPage>
-	update: (args: updatePageArgs) => Promise<IPage>
-	updateAlias: (args: updatePageAliasArgs) => Promise<string>
-	createContent: (args: createPageContentArgs) => Promise<string>
-	updateContent: (args: upatePageContentArgs) => Promise<string>
-	deleteContent: (id: number) => Promise<number>
+	getByParentId: (args: getPagesByParentIdArgs) => Promise<IPageContext[]>
+	getMainPage: (siteId: number) => Promise<IPageContext>
+	create: (args: createPageFormArgs) => Promise<IPageContext>
+	update: (args: updatePageArgs) => Promise<IPageContext>
+	updateUrl: (args: updatePageUrlArgs) => Promise<string>
 }

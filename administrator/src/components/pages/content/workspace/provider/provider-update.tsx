@@ -59,7 +59,7 @@ const ProviderUpdate = ({ provider }: providerUpdateProps) => {
 				</Box>
 			}
 		>
-			<InputStandart name='name' label='Название' value={currentProvider.value.name} isDisabled={isDisabled.value} />
+			<InputStandart name='name' label='Название' value={currentProvider.value.name} isDisabled={isDisabled.value} required />
 			<input type='hidden' name='providerId' value={currentProvider.value.id} />
 			<Paper variant='outlined' sx={{ display: 'flex', alignItems: 'baseline', gap: 2, padding: 1 }}>
 				<Typography color='textDisabled' fontSize={13}>

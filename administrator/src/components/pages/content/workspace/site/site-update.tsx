@@ -3,8 +3,8 @@ import EditIcon from '@mui/icons-material/Edit'
 import { useCallback } from 'react'
 import Form from '@/components/common/form/form'
 import AddIcon from '@mui/icons-material/Add'
-import { useSignal } from '@preact/signals-react'
-import { useSignals } from '@preact/signals-react/runtime'
+import { Signal, useSignal } from '@preact/signals-react'
+import { useSignalEffect, useSignals } from '@preact/signals-react/runtime'
 import { updateSiteArgs } from '@/lib/services/sites-service/sites-arguments'
 import sitesService from '@/lib/services/sites-service/sites-service'
 import { ISiteModel } from '@/signals/sites/site-model'
@@ -13,9 +13,9 @@ import { IProviderModel } from '@/signals/providers/provider-model'
 import InputStandart from '@/components/common/form/input-standart'
 import { tSite } from '@frontend/common'
 
-export type siteUpdateProps = { site: ISiteModel; provider: IProviderModel }
+export type siteUpdateProps = { site: ISiteModel; hasMainPage: Signal<boolean> }
 
-const SiteUpdate = ({ site, provider }: siteUpdateProps) => {
+const SiteUpdate = ({ site, hasMainPage }: siteUpdateProps) => {
 	useSignals()
 	const currentSite = useSignal<tSite>(site.model.value)
 	const successMessage = useSignal<string>('')
@@ -34,7 +34,15 @@ const SiteUpdate = ({ site, provider }: siteUpdateProps) => {
 	}, [])
 
 	const openCreateForm = () => {
-		WorkspacePropsByKey.value = { key: 'SiteCreate', props: { provider, contentKey: 'SiteCreate' } }
+		WorkspacePropsByKey.value = {
+			key: 'PageCreate',
+			props: {
+				siteId: site.model.value.id,
+				parentId: null,
+				onSubmit: site.setMainPage,
+				contentKey: 'PageCreate'
+			}
+		}
 	}
 
 	return (
@@ -48,11 +56,13 @@ const SiteUpdate = ({ site, provider }: siteUpdateProps) => {
 							<EditIcon />
 						</IconButton>
 					</Tooltip>
-					<Tooltip title={`Создать сайт для провайдера ${provider.model.value.name}`} placement='top'>
-						<IconButton onClick={openCreateForm}>
-							<AddIcon />
-						</IconButton>
-					</Tooltip>
+					{!hasMainPage.value && (
+						<Tooltip title={`Создать главную страницу`} placement='top'>
+							<IconButton onClick={openCreateForm}>
+								<AddIcon />
+							</IconButton>
+						</Tooltip>
+					)}
 				</Box>
 			}
 			submitCallback={submitCallback}
