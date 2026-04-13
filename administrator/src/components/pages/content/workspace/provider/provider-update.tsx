@@ -4,12 +4,12 @@ import EditIcon from '@mui/icons-material/Edit'
 import { useCallback } from 'react'
 import providersService from '@/lib/services/providers-service/providers-service'
 import Form from '@/components/common/form/form'
-import { useSignal } from '@preact/signals-react'
+import { batch, useSignal } from '@preact/signals-react'
 import { useSignals } from '@preact/signals-react/runtime'
 import { providerUpdateArgs } from '@/lib/services/providers-service/providers-arguments'
 import { IProviderModel } from '../../../../../signals/providers/provider-model'
 import { WorkspacePropsByKey } from '@/signals/content-page/workspace-model'
-import InputStandart from '@/components/common/form/input-standart'
+import InputStandart from '@/components/common/input/input-standart'
 import { tProvider } from '@frontend/common'
 
 export type providerUpdateProps = { provider: IProviderModel }
@@ -24,9 +24,12 @@ const ProviderUpdate = ({ provider }: providerUpdateProps) => {
 	const submitCallback = async (data: unknown) => {
 		const updatedProvider = await providersService.update(data as providerUpdateArgs)
 
-		provider.model.value = currentProvider.value = updatedProvider
-		successMessage.value = `Провайдер обновлён. Имя: ${updatedProvider.name}, Код: ${updatedProvider.code}`
-		isDisabled.value = true
+		batch(() => {
+			currentProvider.value = updatedProvider
+			provider.update(updatedProvider)
+			successMessage.value = `Провайдер обновлён. Имя: ${updatedProvider.name}, Код: ${updatedProvider.code}`
+			isDisabled.value = true
+		})
 	}
 
 	const formInputCallback = useCallback((e: React.ChangeEvent<HTMLFormElement>) => {

@@ -13,7 +13,7 @@ type selectInputProps = {
 	onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const SelectStandart = ({ name, label, options, value, isDisabled, required, helperText, errorText, withNone, onInput }: selectInputProps) => (
+const SelectStandart = ({ name, label, options, value = '', isDisabled, required, helperText, errorText, withNone, onInput }: selectInputProps) => (
 	<FormControl sx={{ m: 1, minWidth: 120 }} required={required} error={!!errorText} disabled={isDisabled}>
 		<InputLabel id={name + label}>{label}</InputLabel>
 		<Select labelId={name + label} id={name} value={value} label={label} onInput={onInput}>

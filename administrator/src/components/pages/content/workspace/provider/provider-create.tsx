@@ -3,8 +3,8 @@ import { Box, FormControl, InputLabel, Input } from '@mui/material'
 import { providerCreateArgs } from '@/lib/services/providers-service/providers-arguments'
 import { providerList } from '@/signals/providers/provider-list'
 import Form from '@/components/common/form/form'
-import { useSignal } from '@preact/signals-react'
-import InputStandart from '@/components/common/form/input-standart'
+import { batch, useSignal } from '@preact/signals-react'
+import InputStandart from '@/components/common/input/input-standart'
 
 const ProviderCreate = () => {
 	const successMessage = useSignal<string>('')
@@ -12,8 +12,10 @@ const ProviderCreate = () => {
 	const submitCallback = async (data: unknown) => {
 		const createdProvider = await providersService.create(data as providerCreateArgs)
 
-		providerList.add(createdProvider)
-		successMessage.value = `Провайдер создан: ${createdProvider.name}`
+		batch(() => {
+			providerList.add(createdProvider)
+			successMessage.value = `Провайдер создан: ${createdProvider.name}`
+		})
 	}
 
 	return (

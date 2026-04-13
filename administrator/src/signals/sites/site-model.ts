@@ -1,11 +1,12 @@
 import { IPageContext, tSite } from '@frontend/common'
-import { createModel, ReadonlySignal, Signal, signal } from '@preact/signals-react'
+import { createModel, ReadonlySignal, signal } from '@preact/signals-react'
 import { IPageModel, PageModel } from '../pages/page-model'
 
 export interface ISiteModel {
-	model: Signal<tSite>
+	model: ReadonlySignal<tSite>
 	mainPage: ReadonlySignal<IPageModel | null>
 	setMainPage: (page: IPageContext) => void
+	update: (site: tSite) => void
 }
 
 export const SiteModel = createModel<ISiteModel, [tSite]>((site: tSite) => {
@@ -16,5 +17,9 @@ export const SiteModel = createModel<ISiteModel, [tSite]>((site: tSite) => {
 		mainPage.value = new PageModel(page)
 	}
 
-	return { model, mainPage, setMainPage }
+	const update = (site: tSite) => {
+		model.value = site
+	}
+
+	return { model, mainPage, setMainPage, update }
 })

@@ -3,6 +3,7 @@ import { buttonStyle, dropWrapStyle, dropStyle } from './styles'
 import KeyboardArrowRightTwoToneIcon from '@mui/icons-material/KeyboardArrowRightTwoTone'
 import { Signal, useSignal } from '@preact/signals-react'
 import React from 'react'
+import { useSignals } from '@preact/signals-react/runtime'
 
 const TreeNode = ({
 	children,
@@ -10,6 +11,8 @@ const TreeNode = ({
 	hasChildren,
 	openCallback
 }: Readonly<{ children: React.ReactNode; buttonComponent: React.ReactNode; hasChildren: Signal<boolean>; openCallback: () => void }>) => {
+	useSignals()
+
 	const isOpen = useSignal<boolean>(false)
 
 	const onClick = () => {

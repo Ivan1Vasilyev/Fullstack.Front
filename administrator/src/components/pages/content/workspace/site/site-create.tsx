@@ -1,9 +1,9 @@
 import Form from '@/components/common/form/form'
-import InputStandart from '@/components/common/form/input-standart'
+import InputStandart from '@/components/common/input/input-standart'
 import { createSiteArgs } from '@/lib/services/sites-service/sites-arguments'
 import sitesService from '@/lib/services/sites-service/sites-service'
 import { IProviderModel } from '@/signals/providers/provider-model'
-import { useSignal } from '@preact/signals-react'
+import { batch, useSignal } from '@preact/signals-react'
 
 export type siteCreateProps = { provider: IProviderModel }
 
@@ -13,8 +13,10 @@ const SiteCreate = ({ provider }: siteCreateProps) => {
 	const submitCallback = async (data: unknown) => {
 		const createdSite = await sitesService.create(data as createSiteArgs)
 
-		provider.addSite(createdSite)
-		successMessage.value = `Сайт создан: ${createdSite.domainName}`
+		batch(() => {
+			provider.addSite(createdSite)
+			successMessage.value = `Сайт создан: ${createdSite.domainName}`
+		})
 	}
 
 	return (

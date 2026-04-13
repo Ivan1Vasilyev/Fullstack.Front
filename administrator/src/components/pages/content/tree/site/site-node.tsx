@@ -7,6 +7,7 @@ import pagesService from '@/lib/services/pages-service/pages-service'
 import { memo } from 'react'
 import { IPageContext } from '@frontend/common'
 import PageNode from '../page/page-node'
+import { useLiveSignal } from '@preact/signals-react/utils'
 
 const SiteNode = ({ site }: { site: ISiteModel }) => {
 	useSignals()

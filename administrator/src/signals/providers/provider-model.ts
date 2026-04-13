@@ -4,10 +4,11 @@ import { ISiteModel, SiteModel } from '../sites/site-model'
 import { tSite } from '@frontend/common'
 
 export interface IProviderModel {
-	model: Signal<tProvider>
+	model: ReadonlySignal<tProvider>
 	sites: ReadonlySignal<ISiteModel[]>
 	setSites: (siteList: tSite[]) => void
 	addSite: (site: tSite) => void
+	update: (newData: tProvider) => void
 }
 
 export const ProviderModel = createModel<IProviderModel, [tProvider]>((provider: tProvider) => {
@@ -22,10 +23,15 @@ export const ProviderModel = createModel<IProviderModel, [tProvider]>((provider:
 		sites.value = [...sites.value, new SiteModel(site)]
 	}
 
+	const update = (data: tProvider) => {
+		model.value = data
+	}
+
 	return {
 		model,
 		sites,
 		setSites,
-		addSite
+		addSite,
+		update
 	}
 })

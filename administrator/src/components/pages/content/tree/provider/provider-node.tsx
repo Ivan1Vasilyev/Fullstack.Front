@@ -6,6 +6,8 @@ import { IProviderModel } from '../../../../../signals/providers/provider-model'
 import { WorkspacePropsByKey } from '@/signals/content-page/workspace-model'
 import { useSignal, useSignals } from '@preact/signals-react/runtime'
 import { tSite } from '@frontend/common'
+import { batch } from '@preact/signals-react'
+import { useLiveSignal } from '@preact/signals-react/utils'
 
 const ProviderNode = ({ provider }: { provider: IProviderModel }) => {
 	useSignals()
@@ -14,10 +16,12 @@ const ProviderNode = ({ provider }: { provider: IProviderModel }) => {
 	const sites = useSignal<tSite[]>([])
 
 	if (provider.sites.value.length === 0) {
-		sitesService.getByProviderId(provider.model.value.id).then(result => {
-			hasChildren.value = result.length > 0
-			sites.value = result
-		})
+		sitesService.getByProviderId(provider.model.value.id).then(result =>
+			batch(() => {
+				hasChildren.value = result.length > 0
+				sites.value = result
+			})
+		)
 	}
 
 	const openCallback = () => {

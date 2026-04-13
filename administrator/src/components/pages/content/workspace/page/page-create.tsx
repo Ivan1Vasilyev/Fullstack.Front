@@ -1,6 +1,6 @@
 import Form from '@/components/common/form/form'
-import InputStandart from '@/components/common/form/input-standart'
-import SelectStandart from '@/components/common/form/select-standart'
+import InputStandart from '@/components/common/input/input-standart'
+import SelectStandart from '@/components/common/input/select-standart'
 import { CustomTabPanel, tabProps } from '@/components/common/tabs/tabs'
 import { createPageArgs } from '@/lib/services/pages-service/pages-arguments'
 import pagesService from '@/lib/services/pages-service/pages-service'

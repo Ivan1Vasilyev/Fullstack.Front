@@ -5,7 +5,7 @@ import { IProviderModel, ProviderModel } from './provider-model'
 interface IProviderListModel {
 	items: ReadonlySignal<IProviderModel[]>
 	set: (providers: tProvider[]) => void
-	update: (provider: tProvider) => void
+	// update: (provider: tProvider) => void
 	add: (provider: tProvider) => void
 }
 
@@ -18,9 +18,9 @@ const ProviderListModel = createModel<IProviderListModel>(() => {
 			items.value = providers.map(i => new ProviderModel(i))
 		},
 
-		update(provider: tProvider) {
-			items.value = items.value.map(i => (i.model.value.id === provider.id ? new ProviderModel(provider) : i))
-		},
+		// update(provider: tProvider) {
+		// 	items.value = items.value.map(i => (i.model.value.id === provider.id ? new ProviderModel(provider) : i))
+		// },
 
 		add(provider: tProvider) {
 			items.value = [...items.value, new ProviderModel(provider)]

@@ -3,14 +3,13 @@ import EditIcon from '@mui/icons-material/Edit'
 import { useCallback } from 'react'
 import Form from '@/components/common/form/form'
 import AddIcon from '@mui/icons-material/Add'
-import { Signal, useSignal } from '@preact/signals-react'
-import { useSignalEffect, useSignals } from '@preact/signals-react/runtime'
+import { batch, Signal, useSignal } from '@preact/signals-react'
+import { useSignals } from '@preact/signals-react/runtime'
 import { updateSiteArgs } from '@/lib/services/sites-service/sites-arguments'
 import sitesService from '@/lib/services/sites-service/sites-service'
 import { ISiteModel } from '@/signals/sites/site-model'
 import { WorkspacePropsByKey } from '@/signals/content-page/workspace-model'
-import { IProviderModel } from '@/signals/providers/provider-model'
-import InputStandart from '@/components/common/form/input-standart'
+import InputStandart from '@/components/common/input/input-standart'
 import { tSite } from '@frontend/common'
 
 export type siteUpdateProps = { site: ISiteModel; hasMainPage: Signal<boolean> }
@@ -24,9 +23,12 @@ const SiteUpdate = ({ site, hasMainPage }: siteUpdateProps) => {
 	const submitCallback = async (data: unknown) => {
 		const updatedSite = await sitesService.update(data as updateSiteArgs)
 
-		site.model.value = currentSite.value = updatedSite
-		successMessage.value = `Сайт ${currentSite.value.domainName} обновлён`
-		isDisabled.value = true
+		batch(() => {
+			currentSite.value = updatedSite
+			site.update(updatedSite)
+			successMessage.value = `Сайт ${currentSite.value.domainName} обновлён`
+			isDisabled.value = true
+		})
 	}
 
 	const formInputCallback = useCallback((e: React.ChangeEvent<HTMLFormElement>) => {
