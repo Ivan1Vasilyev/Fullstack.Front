@@ -1,46 +1,39 @@
 import { IPageContext } from '@frontend/common'
-import { IPageModel } from '../../../../../signals/pages/page-model'
-import { useSignal } from '@preact/signals-react'
-import { useSignals } from '@preact/signals-react/runtime'
 import pagesService from '@/lib/services/pages-service/pages-service'
-import { WorkspacePropsByKey } from '@/signals/content-page/workspace-model'
 import TreeNode from '../tree-node'
 import { Button } from '@mui/material'
+import { useState } from 'react'
+import { useWorkspace } from '@/store/workspace-store'
 
-const PageNode = ({ page, siteId }: { page: IPageModel; siteId: number }) => {
-	useSignals()
+const PageNode = ({ page, siteId }: { page: IPageContext; siteId: number }) => {
+	const [hasChildren, setHasChildren] = useState<boolean>(false)
+	const [children, setChildren] = useState<IPageContext[]>([])
 
-	const hasChildren = useSignal<boolean>(false)
-	const children = useSignal<IPageContext[]>([])
-
-	if (page.children.value.length === 0) {
-		pagesService.getByParentId({ siteId, parentId: page.model.value.id }).then(pages => {
-			hasChildren.value = pages.length > 0
-			children.value = pages
+	if (children.length === 0) {
+		pagesService.getByParentId({ siteId, parentId: page.id }).then(pages => {
+			if (pages.length > 0) {
+				setHasChildren(true)
+				setChildren(pages)
+			}
 		})
 	}
 
-	const openCallback = () => {
-		if (page.children.value.length === 0 && children.value.length > 0) {
-			page.setChildren(children.value)
-		}
-	}
-
 	const openUpdateForm = () => {
-		WorkspacePropsByKey.value = { key: 'PageUpdate', props: { page, contentKey: `PageUpdate${page.model.value.id}` } }
+		useWorkspace.setState({ key: 'PageUpdate', props: { page, contentKey: `PageUpdate${page.id}` } })
 	}
 
 	return (
 		<TreeNode
 			hasChildren={hasChildren}
-			openCallback={openCallback}
 			buttonComponent={
 				<Button variant='outlined' onClick={openUpdateForm}>
-					{page.model.value.name}
+					{page.name}
 				</Button>
 			}
 		>
-			{page.children.value.length > 0 && page.children.value.map(i => <PageNode page={i} siteId={siteId} />)}
+			{children.map(i => (
+				<PageNode page={i} siteId={siteId} />
+			))}
 		</TreeNode>
 	)
 }

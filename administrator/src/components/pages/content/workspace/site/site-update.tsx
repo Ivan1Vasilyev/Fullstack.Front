@@ -1,50 +1,44 @@
 import { Box, Tooltip, IconButton } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import Form from '@/components/common/form/form'
 import AddIcon from '@mui/icons-material/Add'
-import { batch, Signal, useSignal } from '@preact/signals-react'
-import { useSignals } from '@preact/signals-react/runtime'
 import { updateSiteArgs } from '@/lib/services/sites-service/sites-arguments'
 import sitesService from '@/lib/services/sites-service/sites-service'
-import { ISiteModel } from '@/signals/sites/site-model'
-import { WorkspacePropsByKey } from '@/signals/content-page/workspace-model'
 import InputStandart from '@/components/common/input/input-standart'
 import { tSite } from '@frontend/common'
+import { useWorkspace } from '@/store/workspace-store'
+import { getSiteStore } from '@/store/site-store'
 
-export type siteUpdateProps = { site: ISiteModel; hasMainPage: Signal<boolean> }
+export type siteUpdateProps = { site: tSite; hasMainPage: boolean; providerId: number }
 
-const SiteUpdate = ({ site, hasMainPage }: siteUpdateProps) => {
-	useSignals()
-	const currentSite = useSignal<tSite>(site.model.value)
-	const successMessage = useSignal<string>('')
-	const isDisabled = useSignal<boolean>(true)
+const SiteUpdate = ({ site, hasMainPage, providerId }: siteUpdateProps) => {
+	const [currentSite, setCurrentSite] = useState<tSite>(site)
+	const [isDisabled, setIsDisabled] = useState<boolean>(true)
+	const { update } = getSiteStore(providerId)()
 
 	const submitCallback = async (data: unknown) => {
 		const updatedSite = await sitesService.update(data as updateSiteArgs)
-
-		batch(() => {
-			currentSite.value = updatedSite
-			site.update(updatedSite)
-			successMessage.value = `Сайт ${currentSite.value.domainName} обновлён`
-			isDisabled.value = true
-		})
+		update(updatedSite)
+		setCurrentSite(updatedSite)
+		setIsDisabled(true)
+		return `Сайт ${currentSite.domainName} обновлён`
 	}
 
 	const formInputCallback = useCallback((e: React.ChangeEvent<HTMLFormElement>) => {
-		currentSite.value = { ...currentSite.value, [e.target.name]: e.target.value }
+		setCurrentSite(state => ({ ...state, [e.target.name]: e.target.value }))
 	}, [])
 
 	const openCreateForm = () => {
-		WorkspacePropsByKey.value = {
+		useWorkspace.setState({
 			key: 'PageCreate',
 			props: {
-				siteId: site.model.value.id,
+				siteId: site.id,
 				parentId: null,
-				onSubmit: site.setMainPage,
+				onSubmit: () => {},
 				contentKey: 'PageCreate'
 			}
-		}
+		})
 	}
 
 	return (
@@ -54,11 +48,11 @@ const SiteUpdate = ({ site, hasMainPage }: siteUpdateProps) => {
 			titleButtons={
 				<Box>
 					<Tooltip title='Редактировать' placement='top'>
-						<IconButton onClick={() => (isDisabled.value = false)} disabled={!isDisabled.value}>
+						<IconButton onClick={() => setIsDisabled(false)} disabled={!isDisabled}>
 							<EditIcon />
 						</IconButton>
 					</Tooltip>
-					{!hasMainPage.value && (
+					{!hasMainPage && (
 						<Tooltip title={`Создать главную страницу`} placement='top'>
 							<IconButton onClick={openCreateForm}>
 								<AddIcon />
@@ -69,12 +63,11 @@ const SiteUpdate = ({ site, hasMainPage }: siteUpdateProps) => {
 			}
 			submitCallback={submitCallback}
 			formInputCallback={formInputCallback}
-			successMessage={successMessage}
 		>
-			<InputStandart name='domainName' label='Домен' value={currentSite.value.domainName} isDisabled={isDisabled.value} />
-			<InputStandart name='yandexCounterKey' label='Ключ Яндекс метрики' value={currentSite.value.yandexCounterKey || ''} isDisabled={isDisabled.value} />
+			<InputStandart name='domainName' label='Домен' value={currentSite.domainName} isDisabled={isDisabled} />
+			<InputStandart name='yandexCounterKey' label='Ключ Яндекс метрики' value={currentSite.yandexCounterKey || ''} isDisabled={isDisabled} />
 
-			<input type='hidden' name='id' value={currentSite.value.id} />
+			<input type='hidden' name='id' value={currentSite.id} />
 		</Form>
 	)
 }

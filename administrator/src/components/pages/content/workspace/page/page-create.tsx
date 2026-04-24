@@ -6,13 +6,11 @@ import { createPageArgs } from '@/lib/services/pages-service/pages-arguments'
 import pagesService from '@/lib/services/pages-service/pages-service'
 import { IPageContext } from '@frontend/common'
 import { Box, Tab, Tabs } from '@mui/material'
-import { useSignal } from '@preact/signals-react'
 import { useState } from 'react'
 
 export type pageCreateProps = { siteId: number; parentId: number | null; onSubmit: (page: IPageContext) => void }
 
 const PageCreate = ({ siteId, parentId, onSubmit }: pageCreateProps) => {
-	const successMessage = useSignal<string>('')
 	const [value, setValue] = useState(0)
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -22,10 +20,10 @@ const PageCreate = ({ siteId, parentId, onSubmit }: pageCreateProps) => {
 	const submitCallback = async (data: unknown) => {
 		const createdPage = await pagesService.create(data as createPageArgs)
 		onSubmit(createdPage)
-		successMessage.value = `Страница создана: ${createdPage.name}`
+		return `Страница создана: ${createdPage.name}`
 	}
 	return (
-		<Form title={`Новая страница`} formName='page-create' submitCallback={submitCallback} successMessage={successMessage}>
+		<Form title={`Новая страница`} formName='page-create' submitCallback={submitCallback}>
 			<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
 				<Tabs value={value} onChange={handleChange}>
 					<Tab label='Базовое' {...tabProps(0)} />
@@ -41,7 +39,10 @@ const PageCreate = ({ siteId, parentId, onSubmit }: pageCreateProps) => {
 							name='type'
 							label='Тип страницы'
 							value=''
-							options={{ standart: 'Стандартная', common: 'Общая' }}
+							options={[
+								{ value: 'standart', label: 'Стандартная' },
+								{ value: 'common', label: 'Общая' }
+							]}
 							helperText='Стандартная - размножаемая страница, Общая - 1 на все города'
 							required
 						/>

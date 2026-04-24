@@ -1,48 +1,39 @@
 import { Button } from '@mui/material'
 import TreeNode from '../tree-node'
-import { ISiteModel } from '@/signals/sites/site-model'
-import { WorkspacePropsByKey } from '@/signals/content-page/workspace-model'
-import { useSignal, useSignals } from '@preact/signals-react/runtime'
 import pagesService from '@/lib/services/pages-service/pages-service'
-import { memo } from 'react'
-import { IPageContext } from '@frontend/common'
+import { memo, useState } from 'react'
+import { IPageContext, tSite } from '@frontend/common'
 import PageNode from '../page/page-node'
-import { useLiveSignal } from '@preact/signals-react/utils'
+import { useWorkspace } from '@/store/workspace-store'
 
-const SiteNode = ({ site }: { site: ISiteModel }) => {
-	useSignals()
+const SiteNode = ({ site }: { site: tSite }) => {
+	const [hasChildren, setHasChildren] = useState<boolean>(false)
+	const [mainPage, setMainPage] = useState<IPageContext | null>(null)
 
-	const hasMainPage = useSignal<boolean>(false)
-	const mainPage = useSignal<IPageContext | null>(null)
-
-	if (site.mainPage.value === null) {
-		pagesService.getMainPage(site.model.value.id).then(page => {
-			mainPage.value = page
-			hasMainPage.value = true
+	if (mainPage === null) {
+		pagesService.getMainPage(site.id).then(page => {
+			if (page) {
+				setMainPage(page)
+				setHasChildren(true)
+			}
 		})
 	}
 
-	const openCallback = () => {
-		if (site.mainPage.value === null && mainPage.value !== null) {
-			site.setMainPage(mainPage.value)
-		}
-	}
-
 	const openUpdateForm = () => {
-		WorkspacePropsByKey.value = { key: 'SiteUpdate', props: { site, hasMainPage, contentKey: `SiteUpdate${site.model.value.id}` } }
+		useWorkspace.setState({ key: 'SiteUpdate', props: { site, hasMainPage: hasChildren, contentKey: `SiteUpdate${site.id}` } })
 	}
 
 	return (
 		<TreeNode
-			hasChildren={hasMainPage}
-			openCallback={openCallback}
+			hasChildren={hasChildren}
 			buttonComponent={
 				<Button variant='outlined' onClick={openUpdateForm}>
-					{site.model.value.domainName}
+					{site.domainName}
 				</Button>
 			}
 		>
-			{site.mainPage.value && <PageNode page={site.mainPage.value} siteId={site.model.value.id} />}
+			{/* <PageNode page={mainPage} siteId={site.id} /> */}
+			<div></div>
 		</TreeNode>
 	)
 }

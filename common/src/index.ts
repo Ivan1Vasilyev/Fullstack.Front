@@ -1,4 +1,4 @@
-export * from './lib/api/api-service'
+export * from './lib/api/base/api-service'
 export * from './lib/repository/cityRepository'
 export * from './lib/repository/pageRepository'
 export * from './models/business/city'
@@ -15,5 +15,4 @@ export * from './models/common/i-problem-details'
 export * from './models/content/blocks/i-tariffs-block'
 export * from './models/content/blocks/i-block'
 export * from './models/view/orderable'
-
-export * from './models/view/mock-pages'
+export * from './models/business/phone'

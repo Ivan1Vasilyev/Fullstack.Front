@@ -2,19 +2,17 @@ import { ComponentType } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { Box, IconButton, Tooltip } from '@mui/material'
 import { workspaceBlocksRegistry, workspaceBlockNames, workspaceBlockMap } from './content-block-registry'
-import { WorkspacePropsByKey } from '@/signals/content-page/workspace-model'
-import { useSignals } from '@preact/signals-react/runtime'
+import { useWorkspace } from '@/store/workspace-store'
 
 const Workspace = <K extends workspaceBlockNames>() => {
-	useSignals()
+	const { key, props } = useWorkspace() as { key: K | null; props: workspaceBlockMap[K] | null }
 
-	const { key, props } = WorkspacePropsByKey.value as { key: K | null; props: workspaceBlockMap[K] | null }
 	if (key === null || props === null) return
 
 	const Block = workspaceBlocksRegistry[key] as ComponentType<workspaceBlockMap[K]>
 
 	const closeHandler = () => {
-		WorkspacePropsByKey.value = { key: null, props: null }
+		useWorkspace.setState({ key: null, props: null })
 	}
 
 	return (

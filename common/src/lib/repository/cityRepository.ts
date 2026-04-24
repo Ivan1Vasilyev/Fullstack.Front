@@ -1,5 +1,5 @@
 import { cityModel } from '../../models/business/city'
-import apiService from '../api/api-service'
+import apiService from '../api/base/api-service'
 
 export const getCities = async (providerId: number): Promise<cityModel[]> => {
 	const fetchedCities = await apiService.getCities(providerId)

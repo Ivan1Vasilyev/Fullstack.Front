@@ -5,7 +5,7 @@ const FilesNavigation = () => {
 	return (
 		<Box sx={{ display: 'grid', alignContent: 'center', justifyContent: 'center' }}>
 			<ButtonGroup sx={{ alignItems: 'stretch', justifyContent: 'stretch' }} variant='contained' color='secondary' size='large' orientation='vertical' fullWidth>
-				<Link href='files/tariffs' passHref>
+				<Link href='/files/tariffs'>
 					<Button>Тарифы</Button>
 				</Link>
 				<Link href='/files/addresses'>

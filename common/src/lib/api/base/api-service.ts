@@ -1,5 +1,5 @@
-import { cityContext } from '../../models/business/city'
-import { IPageContext } from '../../models/business/page'
+import { cityContext } from '../../../models/business/city'
+import { IPageContext } from '../../../models/business/page'
 
 const PORT = '7141'
 const HOST = 'localhost'

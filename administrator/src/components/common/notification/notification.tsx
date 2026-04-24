@@ -8,18 +8,23 @@ export type NotificationProps = {
 }
 
 const Notification = ({ data }: { data: NotificationProps }) => {
-	const [open, setOpen] = useState(false)
+	const [open, setIsOpen] = useState<boolean>(false)
 
 	const handleClose = (event?: React.SyntheticEvent | Event, reason?: SnackbarCloseReason) => {
 		if (reason === 'clickaway') {
 			return
 		}
 
-		setOpen(false)
+		setIsOpen(false)
 	}
 
 	useEffect(() => {
-		setOpen(data.isOpen)
+		if (open && data.isOpen) {
+			setIsOpen(false)
+			setTimeout(() => setIsOpen(true), 500)
+		} else {
+			setIsOpen(data.isOpen)
+		}
 	}, [data])
 
 	return (

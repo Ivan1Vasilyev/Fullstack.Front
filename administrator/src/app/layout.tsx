@@ -1,18 +1,18 @@
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
 import { CssBaseline } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
-import darkTheme from '@/components/theme/dark/dark-theme'
+import darkTheme from '@/styles/theme/dark/dark-theme'
 import type { Metadata } from 'next'
 import '../styles/globals.scss'
 import Header from '@/components/common/header/header'
 
 export const metadata: Metadata = {
 	title: 'Администратор',
-	description: 'Чёрный, ты разобрался?',
+	description: 'Чёрный, ты разобрался?'
 }
 
 export default function RootLayout({
-	children,
+	children
 }: Readonly<{
 	children: React.ReactNode
 }>) {

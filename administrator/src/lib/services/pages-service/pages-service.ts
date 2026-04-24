@@ -12,9 +12,9 @@ class PagesService extends ApiBase implements IPagesService {
 	constructor() {
 		super()
 		this._domain += 'pages'
-		this._getByParentId = this._createSimpleFetch<IPageContext[]>({ key: '', method: 'GET' })
-		this._create = this._createFetchWithBody<IPageContext>({ key: '', method: 'POST' })
-		this._update = this._createFetchWithBody<IPageContext>({ key: '', method: 'PATCH' })
+		this._getByParentId = this._createSimpleFetch<IPageContext[]>({ method: 'GET' })
+		this._create = this._createFetchWithBody<IPageContext>({ method: 'POST' })
+		this._update = this._createFetchWithBody<IPageContext>({ method: 'PATCH' })
 		this._updateAlias = this._createFetchWithBody<string>({ key: 'alias', method: 'PATCH' })
 	}
 

@@ -11,9 +11,9 @@ class SitesService extends ApiBase implements ISitesService {
 	constructor() {
 		super()
 		this._domain += 'sites'
-		this._getByProviderId = this._createSimpleFetch<tSite[]>({ key: ``, method: 'GET' })
-		this._update = this._createFetchWithBody<tSite>({ key: '', method: 'PATCH' })
-		this._create = this._createFetchWithBody<tSite>({ key: '', method: 'POST' })
+		this._getByProviderId = this._createSimpleFetch<tSite[]>({ method: 'GET' })
+		this._update = this._createFetchWithBody<tSite>({ method: 'PATCH' })
+		this._create = this._createFetchWithBody<tSite>({ method: 'POST' })
 	}
 
 	getByProviderId = (providerId: number) => this._getByProviderId(providerId)

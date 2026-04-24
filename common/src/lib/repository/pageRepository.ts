@@ -1,6 +1,6 @@
 import { iPage, IPageContext, pageTypeEnum, navigationNames } from '../../models/business/page'
 import { Orderable } from '../../models/view/orderable'
-import apiService from '../api/api-service'
+import apiService from '../api/base/api-service'
 
 // export const getPages = async (): Promise<iPage[]> => {
 // 	const pageContextList: pageContext[] = await apiService.getPages()

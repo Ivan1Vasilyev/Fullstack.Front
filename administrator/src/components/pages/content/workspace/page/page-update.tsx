@@ -1,6 +1,6 @@
-import { IPageModel } from '@/signals/pages/page-model'
+import { IPageContext } from '@frontend/common'
 
-export type pageUpdateProps = { page: IPageModel }
+export type pageUpdateProps = { page: IPageContext }
 
 const PageUpdate = ({ page }: pageUpdateProps) => {
 	return <div></div>

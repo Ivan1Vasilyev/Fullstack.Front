@@ -11,9 +11,9 @@ class ProvidersService extends ApiBase implements IProviderService {
 	constructor() {
 		super()
 		this._domain += 'providers'
-		this._getAll = this._createSimpleFetch<tProvider[]>({ key: '', method: 'GET' })
-		this._update = this._createFetchWithBody<tProvider>({ key: '', method: 'PATCH' })
-		this._create = this._createFetchWithBody<tProvider>({ key: '', method: 'POST' })
+		this._getAll = this._createSimpleFetch<tProvider[]>({ method: 'GET' })
+		this._update = this._createFetchWithBody<tProvider>({ method: 'PATCH' })
+		this._create = this._createFetchWithBody<tProvider>({ method: 'POST' })
 	}
 
 	getAll = () => this._getAll()
